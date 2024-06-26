@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <title>Frontend Mentor | Interactive rating component</title>
+  <script src="https://kit.fontawesome.com/aa4c08b0fe.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="darkBlue flex justify-center mt-32">
+  <div id="container" class="container blue h-96 w-96 rounded-xl">
+    <div class="desc m-10">
+      <div class="content bg-slate-700 h-12 w-12 rounded-full flex justify-center items-center">
+        <div class="star">
+          <i class="fa-solid fa-star fa-lg" style="color: #fd8c30;"></i>
+        </div>
+      </div>
+      <div class="head mt-6 mb-6">
+        <h2 class="text-white text-2xl font-semibold">How did we do?</h2>
+      </div>
+      <div class="para grey text-sm font-semibold">
+        Please let us know how we did with your support request. All feedback is appreciated to help us improve our offering!
+      </div>
+      <div class="btns flex gap-4 mt-5 grey">
+        <button class="rating bg-slate-700 hover:bg-orange-500 h-12 w-12 rounded-full flex justify-center items-center">1</button>
+        <button class="rating bg-slate-700 hover:bg-orange-500 h-12 w-12 rounded-full flex justify-center items-center">2</button>
+        <button class="rating bg-slate-700 hover:bg-orange-500 h-12 w-12 rounded-full flex justify-center items-center">3</button>
+        <button class="rating bg-slate-700 hover:bg-orange-500 h-12 w-12 rounded-full flex justify-center items-center">4</button>
+        <button class="rating bg-slate-700 hover:bg-orange-500 h-12 w-12 rounded-full flex justify-center items-center">5</button>
+      </div>
+      <div class="submit">
+        <button id="submitBtn" type="submit" class="orange btn h-12 w-full mt-4 rounded-full font-bold" onclick="changeColor(this)">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function changeColor(element){
+      element.style.backgroundColor='white';
+      element.style.color='black';
+    }
+
+    document.querySelectorAll('.rating').forEach(button => {
+      button.addEventListener('click', function() {
+        document.querySelectorAll('.rating').forEach(btn => btn.classList.remove('selected'));
+        this.classList.add('selected');
+      });
+    });
+
+    document.getElementById('submitBtn').addEventListener('click', function() {
+      const selectedRating = document.querySelector('.rating.selected');
+      if (selectedRating) {
+        const ratingValue = selectedRating.textContent;
+        const container = document.getElementById('container');
+        container.innerHTML = `
+          <div class="desc m-10 mt-4 text-center">
+            <div class="content h-36 w-36 rounded-full flex justify-center items-center mx-auto">
+              <div class="star">
+                <img src="images/thanks.svg" >
+              </div>
+            </div>
+            <div class="head mt-2 mb-6">
+              <button type="button" class="text-orange-400 cursor-text bg-slate-700 h-8 text-sm w-200 pl-2 pr-2 rounded-full">You selected ${ratingValue} out of 5</button>
+              <h2 class="text-white text-2xl font-semibold mt-8">Thank you!</h2>
+            </div>
+            <div class="para grey text-sm font-semibold mt-4">
+              We appreciate you taking the time to give a rating. of. If you ever need more support, don’t hesitate to get in touch!
+            </div>
+          </div>
+        `;
+      } else {
+        alert('Please select a rating before submitting.');
+      }
+    });
+  </script>
+</body>
+</html>

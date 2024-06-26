@@ -1,0 +1,15 @@
+.darkBlue{
+    background-color: hsl(216, 12%, 8%);
+}
+.blue{
+    background-color: hsl(214, 21%, 13%);
+}
+.grey{
+    color: hsl(217, 12%, 63%);
+}
+.orange{
+    background-color: hsl(25, 97%, 53%);
+}
+.selected {
+    background-color: white !important;
+}
