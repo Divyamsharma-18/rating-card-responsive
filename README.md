@@ -104,5 +104,5 @@ If this card made you feel *a little bit more polished* today:
 Thanks for dropping in.
 May your interfaces stay soft, your transitions smooth, and your users delighted. 🤍🌿
 
----
-<img width="1177" height="806" alt="Image" src="https://github.com/user-attachments/assets/19bbeab6-3ab4-471c-99f7-a8a1a6129014" />
+
+<img width="1620" height="829" alt="Image" src="https://github.com/user-attachments/assets/4611425f-9874-44ee-8f4b-de7ced74e251" />

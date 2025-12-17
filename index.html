@@ -1,17 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-  <title>Frontend Mentor | Interactive rating component</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon.svg">
+  <title>Interactive Rating Component</title>
   <script src="https://kit.fontawesome.com/aa4c08b0fe.js" crossorigin="anonymous"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css">
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Responsive Rating Card" />
+  <meta property="og:description" content="A responsive rating card UI built with clean HTML and CSS" />
+  <meta property="og:image" content="https://ratingcardresponsive.netlify.app/og.png" />
+  <meta property="og:url" content="https://ratingcardresponsive.netlify.app/" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Responsive Rating Card" />
+  <meta name="twitter:description" content="A responsive rating card UI built with clean HTML and CSS" />
+  <meta name="twitter:image" content="https://ratingcardresponsive.netlify.app/og.png" />
+
 </head>
-<body class="darkBlue flex justify-center mt-32">
-  <div id="container" class="container blue h-96 w-96 rounded-xl">
-    <div class="desc m-10">
+
+<body class="darkBlue flex justify-center mt-32 bg-slate-900 font-sans">
+  <div id="container" class="bg-slate-800 h-96 w-full sm:w-96 rounded-xl p-8 relative">
+    <div id="rating-state">
       <div class="content bg-slate-700 h-12 w-12 rounded-full flex justify-center items-center">
         <div class="star">
           <i class="fa-solid fa-star fa-lg" style="color: #fd8c30;"></i>
@@ -20,60 +35,64 @@
       <div class="head mt-6 mb-6">
         <h2 class="text-white text-2xl font-semibold">How did we do?</h2>
       </div>
-      <div class="para grey text-sm font-semibold">
-        Please let us know how we did with your support request. All feedback is appreciated to help us improve our offering!
+      <div class="para text-slate-400 text-sm font-semibold">
+        Please let us know how we did with your support request. All feedback is appreciated to help us improve our
+        offering!
       </div>
-      <div class="btns flex gap-4 mt-5 grey">
-        <button class="rating bg-slate-700 hover:bg-orange-500 h-12 w-12 rounded-full flex justify-center items-center">1</button>
-        <button class="rating bg-slate-700 hover:bg-orange-500 h-12 w-12 rounded-full flex justify-center items-center">2</button>
-        <button class="rating bg-slate-700 hover:bg-orange-500 h-12 w-12 rounded-full flex justify-center items-center">3</button>
-        <button class="rating bg-slate-700 hover:bg-orange-500 h-12 w-12 rounded-full flex justify-center items-center">4</button>
-        <button class="rating bg-slate-700 hover:bg-orange-500 h-12 w-12 rounded-full flex justify-center items-center">5</button>
-      </div>
+      <div id="btn-group" class="flex justify-between gap-2 mt-6 text-slate-400 font-bold"></div>
       <div class="submit">
-        <button id="submitBtn" type="submit" class="orange btn h-12 w-full mt-4 rounded-full font-bold" onclick="changeColor(this)">Submit</button>
+        <button id="submitBtn"
+          class="bg-orange-500 hover:bg-white hover:text-orange-500 transition-colors text-white h-12 w-full mt-6 rounded-full font-bold uppercase tracking-widest text-sm">Submit</button>
+      </div>
+    </div>
+    <div id="thank-you-state" class="hidden text-center flex-col items-center mt-4">
+      <div class="content h-36 w-36 rounded-full flex justify-center items-center">
+        <img src="images/thanks.svg" alt="Thank you illustration">
+      </div>
+      <div class="head mt-2 mb-6">
+        <span class="text-orange-500 bg-slate-700 py-1 px-4 rounded-full text-sm">
+          You selected <span id="rating-value"></span> out of 5
+        </span>
+        <h2 class="text-white text-2xl font-semibold mt-8">Thank you!</h2>
+      </div>
+      <div class="para text-slate-400 text-sm font-semibold">
+        We appreciate you taking the time to give a rating. If you ever need more support, don’t hesitate to get
+        in touch!
       </div>
     </div>
   </div>
-
   <script>
-    function changeColor(element){
-      element.style.backgroundColor='white';
-      element.style.color='black';
-    }
-
-    document.querySelectorAll('.rating').forEach(button => {
-      button.addEventListener('click', function() {
-        document.querySelectorAll('.rating').forEach(btn => btn.classList.remove('selected'));
-        this.classList.add('selected');
+    const totalStars = 5;
+    const btnContainer = document.getElementById('btn-group');
+    let currentRating = 0;
+    const btnClasses = "rating-btn w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-slate-700 hover:bg-orange-500 hover:text-white flex justify-center items-center cursor-pointer transition-all duration-200";
+    const activeClasses = "bg-slate-400 text-white";
+    for (let i = 1; i <= totalStars; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = i;
+      btn.className = btnClasses;
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.rating-btn').forEach(b => {
+          b.classList.remove('bg-slate-400', 'text-white');
+          b.classList.add('bg-slate-700');
+        });
+        this.classList.remove('bg-slate-700');
+        this.classList.add('bg-slate-400', 'text-white');
+        currentRating = i;
       });
-    });
-
-    document.getElementById('submitBtn').addEventListener('click', function() {
-      const selectedRating = document.querySelector('.rating.selected');
-      if (selectedRating) {
-        const ratingValue = selectedRating.textContent;
-        const container = document.getElementById('container');
-        container.innerHTML = `
-          <div class="desc m-10 mt-4 text-center">
-            <div class="content h-36 w-36 rounded-full flex justify-center items-center mx-auto">
-              <div class="star">
-                <img src="images/thanks.svg" >
-              </div>
-            </div>
-            <div class="head mt-2 mb-6">
-              <button type="button" class="text-orange-400 cursor-text bg-slate-700 h-8 text-sm w-200 pl-2 pr-2 rounded-full">You selected ${ratingValue} out of 5</button>
-              <h2 class="text-white text-2xl font-semibold mt-8">Thank you!</h2>
-            </div>
-            <div class="para grey text-sm font-semibold mt-4">
-              We appreciate you taking the time to give a rating. of. If you ever need more support, don’t hesitate to get in touch!
-            </div>
-          </div>
-        `;
+      btnContainer.appendChild(btn);
+    }
+    document.getElementById('submitBtn').addEventListener('click', function () {
+      if (currentRating > 0) {
+        document.getElementById('rating-value').textContent = currentRating;
+        document.getElementById('rating-state').classList.add('hidden');
+        document.getElementById('thank-you-state').classList.remove('hidden');
+        document.getElementById('thank-you-state').classList.add('flex');
       } else {
-        alert('Please select a rating before submitting.');
+        alert("Please select a rating first!");
       }
     });
   </script>
 </body>
+
 </html>
